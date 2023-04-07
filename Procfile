@@ -1,0 +1,1 @@
+web: gunicorn alphazone.wsgi --log-file -
