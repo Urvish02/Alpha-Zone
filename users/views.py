@@ -8,8 +8,10 @@ from django.db.models import Q
 from .models import Profile, Message
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm
 from .utils import searchProfiles, paginateProfiles
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 def loginUser(request):
     page = 'login'
 
@@ -38,12 +40,14 @@ def loginUser(request):
     return render(request, 'users/login_register.html')
 
 
+@csrf_exempt
 def logoutUser(request):
     logout(request)
     messages.info(request, 'User was logged out!')
     return redirect('login')
 
 
+@csrf_exempt
 def registerUser(request):
     page = 'register'
     form = CustomUserCreationForm()

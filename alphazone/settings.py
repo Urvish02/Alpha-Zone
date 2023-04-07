@@ -18,6 +18,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = ['https://alphazone.up.railway.app/admin']
+
+
 
 # Application definition
 
