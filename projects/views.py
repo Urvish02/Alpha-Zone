@@ -5,8 +5,9 @@ from django.contrib import messages
 from .models import Project, Tag
 from .forms import ProjectForm, ReviewForm
 from .utils import searchProjects, paginateProjects
+from django.views.decorators.csrf import csrf_exempt
 
-
+@csrf_exempt
 def projects(request):
     projects, search_query = searchProjects(request)
     custom_range, projects = paginateProjects(request, projects, 6)
@@ -15,6 +16,7 @@ def projects(request):
                'search_query': search_query, 'custom_range': custom_range}
     return render(request, 'projects/projects.html', context)
 
+@csrf_exempt
 def project(request, pk):
     projectObj = Project.objects.get(id=pk)
     form = ReviewForm()
@@ -33,6 +35,7 @@ def project(request, pk):
 
     return render(request, 'projects/single-project.html', {'project':projectObj, 'form': form})
 
+@csrf_exempt
 @login_required(login_url="login")
 def createProject(request):
     profile = request.user.profile
@@ -55,7 +58,7 @@ def createProject(request):
     context = {'form': form}
     return render(request, "projects/project_form.html", context)
 
-
+@csrf_exempt
 @login_required(login_url="login")
 def updateProject(request, pk):
     profile = request.user.profile
@@ -77,7 +80,7 @@ def updateProject(request, pk):
     context = {'form': form, 'project': project}
     return render(request, "projects/project_form.html", context)
 
-
+@csrf_exempt
 @login_required(login_url="login")
 def deleteProject(request, pk):
     profile = request.user.profile
@@ -88,6 +91,7 @@ def deleteProject(request, pk):
     context = {'object': project}
     return render(request, 'delete_template.html', context)
 
+@csrf_exempt
 @login_required(login_url='login')
 def deleteTag(request,pk):
   profile = request.user.profile
